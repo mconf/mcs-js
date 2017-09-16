@@ -25,7 +25,7 @@ exports.join = function (test) {
   });
 
   client.on('open', function () {
-    client.join('1','Joao');
+    client.join('1','Joao','MCU');
   });
 }
 
@@ -49,6 +49,6 @@ exports.joinArgs = function (test) {
   });
 
   client.on('open', function () {
-    client.join('1','Joao');
+    client.join('1','Joao','MCU');
   });
 }
