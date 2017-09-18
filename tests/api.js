@@ -29,6 +29,49 @@ exports.join = function (test) {
   });
 }
 
+
+exports.joinleave = function(test){
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(function () {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', function (rclient) {
+    rclient.on('join', function (args){
+        test.ok(true, 'Join is working');
+        rclient.joined('1');
+    });
+      rclient.on('leave', function(args){
+      test.ok(true,'leave is working');
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+
+    })
+  });
+
+
+  client.on('open', function () {
+    client.join('1','Joao','MCU');
+    client.on('joined', function(args){
+      client.leave('1');
+    })
+  });
+
+
+
+
+
+}
+
+
+
+
 exports.joinArgs = function (test) {
   var server = new mcs.Server({port: _port});
   var client = new mcs('ws://' + _host + ':' + _port++);
