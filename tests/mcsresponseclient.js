@@ -15,3 +15,19 @@ exports.joinedNullUserId = function (test) {
   }, Error);
   test.done();
 }
+
+exports.publishedAndSubscribedNullParams = function (test) {
+  var client = new MCSResponseClient();
+  test.throws(function () {
+    client.publishedAndSubscribed(null);
+  }, Error);
+  test.done();
+}
+
+exports.unpublishedAndUnsubscribedNullParams = function (test) {
+  var client = new MCSResponseClient();
+  test.throws(function () {
+    client.unpublishedAndUnsubscribed(null);
+  }, Error);
+  test.done();
+}

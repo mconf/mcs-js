@@ -146,7 +146,7 @@ exports.unpublishAndUnsubscribe = (test) => {
   }, _timeout);
 
   server.on('connection', (rclient) => {
-    rclient.on('unpublishandsubscribe', (args) => {
+    rclient.on('unpublishandunsubscribe', (args) => {
       test.ok(true,'publishAndSubscribe is working', args);
       test.done();
     })
