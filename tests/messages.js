@@ -4,7 +4,7 @@ var Joined = require('../lib/messages/joined');
 
 exports.MCSMessageName = function (test) {
   var mcs = new MCSMessage();
-  test.equal(mcs.name,'mcsmessage', 'Valid name');
+  test.equal(mcs.name,'mCSMessage', 'Valid name');
   test.done();
 }
 
