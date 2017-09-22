@@ -16,7 +16,7 @@ exports.join = function (test) {
   }, _timeout);
 
   server.on('connection', function (rclient) {
-    rclient.on('join', function (args){
+    rclient.on('join', () => {
       test.ok(true, 'Join is working');
       test.done();
       server.closeConnection();
@@ -41,7 +41,7 @@ exports.joinJoined = (test) => {
   }, _timeout);
 
   server.on('connection', (rclient) => {
-    rclient.on('join', (args) => {
+    rclient.on('join', () => {
       rclient.joined('abcd1234');
     });
   });
@@ -49,7 +49,7 @@ exports.joinJoined = (test) => {
   client.on('open', () => {
     client.join('1','Joao', {});
 
-    client.on('joined', (args) => {
+    client.on('joined', () => {
       test.ok(true, 'Joined is working');
       test.done();
       server.closeConnection();
@@ -70,7 +70,7 @@ exports.leave = (test) => {
   }, _timeout);
 
   server.on('connection', (rclient) => {
-    rclient.on('leave', (args) => {
+    rclient.on('leave', () => {
       test.ok(true,'leave is working');
       client.closeConnection();
       server.closeConnection();
@@ -95,14 +95,14 @@ exports.leaveLeft = (test) => {
   }, _timeout);
 
   server.on('connection', (rclient) => {
-    rclient.on('join', (args) => {
+    rclient.on('join', () => {
       rclient.joined('abcd1234');
     })
   });
 
   client.on('open', () => {
     client.join('1','Joao', {});
-    client.on('joined', (args) => {
+    client.on('joined', () => {
       test.ok(true,'joined is working');
       client.closeConnection();
       server.closeConnection();
@@ -123,8 +123,8 @@ exports.publishAndSubscribe = (test) => {
   }, _timeout);
 
   server.on('connection', (rclient) => {
-    rclient.on('publishAndSubscribe', (args) => {
-      test.ok(true,'publishAndSubscribe is working', args);
+    rclient.on('publishAndSubscribe', () => {
+      test.ok(true,'publishAndSubscribe is working');
       test.done();
     })
   });
@@ -146,8 +146,8 @@ exports.unpublishAndUnsubscribe = (test) => {
   }, _timeout);
 
   server.on('connection', (rclient) => {
-    rclient.on('unpublishAndUnsubscribe', (args) => {
-      test.ok(true,'publishAndSubscribe is working', args);
+    rclient.on('unpublishAndUnsubscribe', () => {
+      test.ok(true,'publishAndSubscribe is working');
       test.done();
     })
   });

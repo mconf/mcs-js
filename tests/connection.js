@@ -35,7 +35,7 @@ exports.disconnect = function (test) {
   }, _timeout);
 
   client.on('open', () => {
-    client.on('close', (args) => {
+    client.on('close', () => {
       test.ok(true, 'User disconnected!')
       server.closeConnection();
       test.done();
@@ -56,11 +56,11 @@ exports.disconnected = (test) => {
     test.done();
   }, _timeout);
 
-  server.on('connection', (client) => {
+  server.on('connection', () => {
     server.closeConnection();
   });
 
-  client.on('close', (args) => {
+  client.on('close', () => {
     test.ok(true, 'Server disconnected!')
     client.closeConnection();
     test.done();
