@@ -11,10 +11,10 @@ var client = new mcs('ws://localhost:8080/mcs');
 
 client.on('open', function () {
   console.log('Connected ... ');
-  mcsc.join('1','Joao', {});
+  client.join('1','Joao', {});
 });
 
-mcsc.on('joined', function (args) {
+client.on('joined', function (args) {
   console.log('Joined ! this is my user_id: ' + args.user_id);
 });
 ```
