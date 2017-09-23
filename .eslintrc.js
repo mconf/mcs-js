@@ -32,7 +32,7 @@ module.exports = {
             "1tbs"
         ],
         "callback-return": "error",
-        "camelcase": "off",
+        "camelcase": ["error",{"properties":"always"}],
         "capitalized-comments": "off",
         "class-methods-use-this": "error",
         "comma-dangle": "error",
@@ -63,7 +63,6 @@ module.exports = {
             "error",
             "never"
         ],
-        "func-style": "error",
         "function-paren-newline": "error",
         "generator-star-spacing": "error",
         "getter-return": "error",
@@ -231,7 +230,7 @@ module.exports = {
         "sort-imports": "error",
         "sort-keys": "error",
         "sort-vars": "error",
-        "space-before-blocks": "off",
+        "space-before-blocks": "error",
         "space-before-function-paren": "off",
         "space-in-parens": "off",
         "space-infix-ops": "error",

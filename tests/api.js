@@ -167,7 +167,7 @@ exports.joinArgs = function (test) {
   }, _timeout);
 
   server.on('connection', function (rclient) {
-    rclient.on('join', function (args){
+    rclient.on('join', function (args) {
       test.equals(args.room_id, '1', 'Join\'s room_id working');
       test.equals(args.user_name, 'Joao', 'Join\'s user_name working');
       test.done();
