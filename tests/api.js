@@ -180,3 +180,28 @@ exports.joinArgs = function (test) {
     client.join('1','Joao','MCU');
   });
 }
+
+exports.leaveArgs = (test) => {
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(() => {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', (rclient) => {
+    rclient.on('leave', (args) => {
+      test.equals(args.room_id, '2', 'Leave\'s room_id working');
+      client.closeConnection();
+      server.closeConnection();
+      test.done();
+    })
+  });
+
+  client.on('open', () => {
+    client.leave('2');
+  });
+}
