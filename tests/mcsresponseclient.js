@@ -39,33 +39,100 @@ exports.joinedEmptyUserId = function (test) {
 }
 
 exports.joinedNullUserId = function (test) {
-  var client = new MCSResponseClient();
-  test.throws(function () {
-    client.joined(null);
-  }, Error);
-  test.done();
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(function () {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', function (rclient) {
+    rclient.on('join', () => {
+      test.throws(function () {
+        rclient.joined(null);
+      }, Error);
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+    });
+  });
+
+  client.on('open', function () {
+    client.join('1','Joao',{});
+    client.on('joined', () => {
+      test.ok(true, 'Joined is working');
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+  });
+});
 }
 
 exports.publishedAndSubscribedEmptySdp = function (test) {
-  var client = new MCSResponseClient();
-  test.throws(function () {
-    client.publishedAndSubscribed('');
-  }, Error);
-  test.done();
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(function () {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', function (rclient) {
+    rclient.on('publishAndSubscribe', () => {
+      test.throws(function () {
+        rclient.publishedAndSubscribed('');
+      }, Error);
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+    });
+  });
+
+  client.on('open', function () {
+    client.publishAndSubscribe('23a','sdp');
+    client.on('publishedAndSubscribed', () => {
+      test.ok(true, 'publishAndSubscribe is working');
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+  });
+});
 }
 
 exports.publishedAndSubscribedNullParams = function (test) {
-  var client = new MCSResponseClient();
-  test.throws(function () {
-    client.publishedAndSubscribed(null);
-  }, Error);
-  test.done();
-}
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
 
-exports.unpublishedAndUnsubscribedNullParams = function (test) {
-  var client = new MCSResponseClient();
-  test.throws(function () {
-    client.unpublishedAndUnsubscribed(null);
-  }, Error);
-  test.done();
+  setTimeout(function () {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', function (rclient) {
+    rclient.on('publishAndSubscribe', () => {
+      test.throws(function () {
+        rclient.publishedAndSubscribed(null);
+      }, Error);
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+    });
+  });
+
+  client.on('open', function () {
+    client.publishAndSubscribe('23a','sdp');
+    client.on('publishedAndSubscribed', () => {
+      test.ok(true, 'publishedAndSubscribed is working');
+      test.done();
+      server.closeConnection();
+      client.closeConnection();
+    });
+  });
 }
