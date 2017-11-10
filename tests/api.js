@@ -130,7 +130,7 @@ exports.publishAndSubscribe = (test) => {
   });
 
   client.on('open', () => {
-    client.publishAndSubscribe('MEDIA_1','AUDIO_AND_VIDEO',{});
+    client.publishAndSubscribe('USER_X', 'MEDIA_1', 'RTP',{descriptor: 'SDP1'});
   });
 }
 
@@ -178,5 +178,35 @@ exports.joinArgs = function (test) {
 
   client.on('open', function () {
     client.join('1','Joao','MCU');
+  });
+}
+
+
+exports.publishAndSubscribeArgs = (test) => {
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(() => {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', (rclient) => {
+    rclient.on('publishAndSubscribe', (args) => {
+      test.equals(args.source_id, 'USER_X', 'PubAndSub\'s room_id working');
+      test.equals(args.media_id, 'MEDIA_1', 'PubAndSub\'s room_id working');
+      test.equals(args.type, 'RTP', 'PubAndSub\'s room_id working');
+      test.equals(
+        args.params.descriptor,
+        'SDP1', 'PubAndSub\'s room_id working'
+      );
+      test.done();
+    })
+  });
+
+  client.on('open', () => {
+    client.publishAndSubscribe('USER_X', 'MEDIA_1', 'RTP',{descriptor: 'SDP1'});
   });
 }
