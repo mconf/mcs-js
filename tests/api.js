@@ -134,6 +134,42 @@ exports.publishAndSubscribe = (test) => {
   });
 }
 
+exports.publishAndSubscribePublishedAndSubscribed = (test) => {
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(() => {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', (rclient) => {
+    rclient.on('publishAndSubscribe', (args) => {
+      test.equals(args.source_id, 'USER_X', 'PubAndSub\'s room_id working');
+      test.equals(args.media_id, 'MEDIA_1', 'PubAndSub\'s room_id working');
+      test.equals(args.type, 'RTP', 'PubAndSub\'s room_id working');
+      test.equals(
+        args.params.descriptor,
+        'SDP1', 'PubAndSub\'s room_id working'
+      );
+      rclient.publishedAndSubscribed('UnIqUe_Id', 'SDP1_ANSWER');
+    })
+  });
+
+  client.on('open', () => {
+    client.on('publishedAndSubscribed', (args) => {
+      console.log('Received publishedAndSubscribed: ', args);
+      test.notEqual(args, null, 'PubedAndSubed\'s args working');
+      test.equal(args.media_id, 'UnIqUe_Id', 'PubedAndSubed\'s media_id');
+      test.equal(args.sdp, 'SDP1_ANSWER', 'PubedAndSubed\'s sdp');
+      test.done();
+    });
+    client.publishAndSubscribe('USER_X', 'MEDIA_1', 'RTP',{descriptor: 'SDP1'});
+  });
+}
+
 exports.unpublishAndUnsubscribe = (test) => {
   var server = new mcs.Server({port: _port});
   var client = new mcs('ws://' + _host + ':' + _port++);
