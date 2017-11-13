@@ -24,7 +24,7 @@ client.on('joined', function (args) {
 ```javascript
 var mcs = require('mcs-js');
 
-var server = new mcs.Server({port: 8080});
+var server = new mcs.Server({port: 8080, path: '/mcs'});
 
 console.log('Server is running ...');
 
