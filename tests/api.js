@@ -125,6 +125,8 @@ exports.publishAndSubscribe = (test) => {
   server.on('connection', (rclient) => {
     rclient.on('publishAndSubscribe', () => {
       test.ok(true,'publishAndSubscribe is working');
+      client.closeConnection();
+      server.closeConnection();
       test.done();
     })
   });
@@ -160,10 +162,11 @@ exports.publishAndSubscribePublishedAndSubscribed = (test) => {
 
   client.on('open', () => {
     client.on('publishedAndSubscribed', (args) => {
-      console.log('Received publishedAndSubscribed: ', args);
       test.notEqual(args, null, 'PubedAndSubed\'s args working');
       test.equal(args.media_id, 'UnIqUe_Id', 'PubedAndSubed\'s media_id');
       test.equal(args.sdp, 'SDP1_ANSWER', 'PubedAndSubed\'s sdp');
+      client.closeConnection();
+      server.closeConnection();
       test.done();
     });
     client.publishAndSubscribe('USER_X', 'MEDIA_1', 'RTP',{descriptor: 'SDP1'});
@@ -184,6 +187,8 @@ exports.unpublishAndUnsubscribe = (test) => {
   server.on('connection', (rclient) => {
     rclient.on('unpublishAndUnsubscribe', () => {
       test.ok(true,'publishAndSubscribe is working');
+      client.closeConnection();
+      server.closeConnection();
       test.done();
     })
   });
@@ -199,6 +204,8 @@ exports.joinArgs = function (test) {
 
   setTimeout(function () {
     test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
     test.done();
   }, _timeout);
 
@@ -206,9 +213,9 @@ exports.joinArgs = function (test) {
     rclient.on('join', function (args) {
       test.equals(args.room_id, '1', 'Join\'s room_id working');
       test.equals(args.user_name, 'Joao', 'Join\'s user_name working');
-      test.done();
-      server.closeConnection();
       client.closeConnection();
+      server.closeConnection();
+      test.done();
     });
   });
 
@@ -238,11 +245,38 @@ exports.publishAndSubscribeArgs = (test) => {
         args.params.descriptor,
         'SDP1', 'PubAndSub\'s room_id working'
       );
+      client.closeConnection();
+      server.closeConnection();
       test.done();
     })
   });
 
   client.on('open', () => {
     client.publishAndSubscribe('USER_X', 'MEDIA_1', 'RTP',{descriptor: 'SDP1'});
+  });
+}
+
+exports.leaveArgs = (test) => {
+  var server = new mcs.Server({port: _port});
+  var client = new mcs('ws://' + _host + ':' + _port++);
+
+  setTimeout(() => {
+    test.ok(false,'Server timeout');
+    client.closeConnection();
+    server.closeConnection();
+    test.done();
+  }, _timeout);
+
+  server.on('connection', (rclient) => {
+    rclient.on('leave', (args) => {
+      test.equals(args.room_id, '2', 'Leave\'s room_id working');
+      client.closeConnection();
+      server.closeConnection();
+      test.done();
+    })
+  });
+
+  client.on('open', () => {
+    client.leave('2');
   });
 }

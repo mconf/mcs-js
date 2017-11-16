@@ -17,6 +17,11 @@ client.on('open', function () {
 client.on('joined', function (args) {
   console.log('Joined ! this is my user_id: ' + args.user_id);
 });
+
+client.on('error', function (error){
+  console.log(error);
+  //handle error
+});
 ```
 
 #### Server Example ####
@@ -40,4 +45,3 @@ server.on('connection', function (client) {
 ```
 
 ## Authors ##
-
