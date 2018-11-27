@@ -10,9 +10,7 @@ var mcs = require('mcs-js');
 var client = new mcs('ws://localhost:8080/mcs');
 
 client.on('open', function () {
-  console.log('Connected ... ');
-  client.join('1','Joao', {});
-});
+  console.log('Connected ... '); client.join('1','Joao', {}); });
 
 client.on('joined', function (args) {
   console.log('Joined ! this is my user_id: ' + args.user_id);
@@ -43,5 +41,10 @@ server.on('connection', function (client) {
   });
 });
 ```
+
+## Local dependency
+
+You need to install the local dependencies so dependents can use this in a local environment
+npm install -d --production
 
 ## Authors ##
