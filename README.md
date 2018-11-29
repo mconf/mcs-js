@@ -44,4 +44,9 @@ server.on('connection', function (client) {
 });
 ```
 
+## Local dependency
+
+You need to install the local dependencies so dependents can use this in a local environment
+npm install -d --production
+
 ## Authors ##
