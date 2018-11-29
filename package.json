@@ -1,12 +1,12 @@
 {
   "name": "mcs-js",
-  "version": "0.0.1-dev",
+  "version": "0.0.2",
   "dependencies": {
-    "ws": "3.1.0",
-    "uuid": "*"
+    "ws": "6.1.2",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
-    "nodeunit": "0.11.1",
+    "nodeunit": "0.11.3",
     "eslint": "4.7.3"
   }
 }
