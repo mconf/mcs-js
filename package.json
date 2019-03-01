@@ -1,6 +1,6 @@
 {
   "name": "mcs-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
     "ws": "6.1.2",
     "uuid": "3.3.2"
