@@ -2,8 +2,11 @@
   "name": "mcs-js",
   "version": "0.0.13",
   "dependencies": {
-    "ws": "^7.4.6",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "ws": "^8.4.2"
   },
-  "devDependencies": {}
+  "optionalDependencies": {
+    "bufferutil": "^4.0.6",
+    "utf-8-validate": "^5.0.8"
+  }
 }
