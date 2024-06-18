@@ -3,7 +3,7 @@
   "version": "0.0.19",
   "dependencies": {
     "uuid": "^9.0.0",
-    "ws": "^8.12.1"
+    "ws": "^8.17.1"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.6",
