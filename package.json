@@ -2,7 +2,7 @@
   "name": "mcs-js",
   "version": "0.0.19",
   "dependencies": {
-    "uuid": "^9.0.0",
+    "uuid": "^10.0.0",
     "ws": "^8.18.0"
   },
   "optionalDependencies": {
